@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Goedkeuren Ervaringsdeskundigen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% block additional_css %}
+  <link rel="stylesheet" href="/static/styles/beheerdersdashboard.css">
+{% endblock %}
+
+
+  {% include "components/navbar.html" %}
+
+</head>
+<body>
+
+  <div class="container container-custom" role="region" aria-labelledby="afwachting-title">
+    <h2 id="dashboard-title">Beheerders Dashboard - Ervaringsdeskundigen</h2>
+    <h3 id="afwachting-title">In Afwachting</h3>
+    <div class="table-responsive">
+      <table class="table table-striped align-middle" aria-describedby="afwachting">
+        <caption id="afwachting" class="visually-hidden">toont een tabel met ervaringsdeskundigen in afwachting</caption>
+        <thead>
+          <tr>
+            <th scope="col">Naam</th>
+            <th scope="col">Status</th>
+            <th scope="col">Geslacht</th>
+            <th scope="col">Geboortedatum</th>
+            <th scope="col">Gebruikte hulpmiddelen</th>
+            <th scope="col">Bijzonderheden</th>
+            <th scope="col">Acties</th>
+          </tr>
+        </thead>
+        <tbody data-target-status="3" data-target-table="ervaringsdeskundigen"></tbody>
+    </table>
+  </div>
+  <div class="container container-custom" role="region" aria-labelledby="afgekeurd-title">
+    <h3 id="afgekeurd-title">Afgekeurde Ervaringsdeskundigen</h3>
+    <div class="table-responsive">
+      <table class="table table-striped align-middle" aria-describedby="afgekeurd">
+        <caption id="afgekeurd" class="visually-hidden">toont een tabel met afgekeurde ervaringsdeskundigen</caption>
+        <thead>
+          <tr>
+            <th scope="col">Naam</th>
+            <th scope="col">Status</th>
+            <th scope="col">Geslacht</th>
+            <th scope="col">Geboortedatum</th>
+            <th scope="col">Gebruikte hulpmiddelen</th>
+            <th scope="col">Bijzonderheden</th>
+          </tr>
+        </thead>
+        <tbody data-target-status="2" data-target-table="ervaringsdeskundigen"></tbody>
+    </table>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+v5I8uJ0B9xXYzSzZr6TzMDTzMd2x" 
+    crossorigin="anonymous">
+  </script>
+  <script src="/static/scripts/beheerders_dash.js"></script>
+</body>
+</html>

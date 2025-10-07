@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Goedkeuren Deelname Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% block additional_css %}
+    <link rel="stylesheet" href="/static/styles/beheerdersdashboard.css">
+  {% endblock %}
+
+  <!-- Bootstrap CSS via CDN -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoZyNRt19m9MawMu6zNczZ6OL5X8YOrhcLjE0PEMdFN7C9h" 
+    crossorigin="anonymous"
+  >
+</head>
+<body>
+  {% include "components/navbar.html" %}
+
+  <!-- Skip link voor toetsenbordgebruikers -->
+  <a href="#main-content" class="skip-link">Direct naar hoofdinhoud</a>
+
+  <main id="main-content">
+    <div class="container container-custom mt-5" role="region" aria-labelledby="dashboard-heading">
+      <h2 id="dashboard-heading" class="text-center mb-4">Beheerders Dashboard - Deelnamen</h2>
+      <h3 id="afwachting-heading">In afwachting</h3>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle" aria-describedby="table-description">
+          <caption id="table-description" class="visually-hidden">
+            Tabel met deelnamens die wachten op goedkeuring
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Expert</th>
+              <th scope="col">Onderzoek</th>
+              <th scope="col">Datum</th>
+              <th scope="col">Acties</th>
+            </tr>
+          </thead>
+          <tbody data-target-status="3" data-target-table="deelnamen"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="container container-custom" role="region" aria-labelledby="afgekeurd-heading">
+      <h3 id="afgekeurd-heading">Afgekeurde Deelnamen</h3>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle" aria-describedby="afgekeurd-description">
+          <caption id="afgekeurd-description" class="visually-hidden">
+            Tabel met afgekeurde deelnamen
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Expert</th>
+              <th scope="col">Onderzoek</th>
+              <th scope="col">Datum</th>
+            </tr>
+          </thead>
+          <tbody data-target-status="2" data-target-table="deelnamen"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Bootstrap JS via CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+v5I8uJ0B9xXYzSzZr6TzMDTzMd2x" 
+    crossorigin="anonymous">
+  </script>
+  <script src="/static/scripts/beheerders_dash.js"></script>
+</body>
+</html>

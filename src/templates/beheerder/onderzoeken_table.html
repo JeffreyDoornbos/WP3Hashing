@@ -1,0 +1,55 @@
+{% if status_id == 3 %}
+    {% if onderzoeken %}
+        {% for onderzoek in onderzoeken %}
+            <tr>
+                <td>{{ onderzoek.titel }}</td>
+                <td>{{ onderzoek.status_naam or "Onbekend" }}</td>
+                <td>{{ onderzoek.start_datum }}</td>
+                <td>{{ onderzoek.eind_datum }}</td>
+                <td>{{ onderzoek.type_onderzoek }}</td>
+                <td>
+                    <form 
+                    method="post" 
+                    action="{{ url_for('beheerders_blueprint.update_status', onderzoek_id=onderzoek.id) }}" 
+                    class="d-inline"
+                    >
+                        <input type="hidden" name="status" value="approved">
+                        <button type="submit" class="btn btn-sm btn-approve" data-target-table="onderzoeken">Goedkeuren</button>
+                    </form>
+                    <form 
+                    method="post" 
+                    action="{{ url_for('beheerders_blueprint.update_status', onderzoek_id=onderzoek.id) }}" 
+                    class="d-inline"
+                    >
+                        <input type="hidden" name="status" value="rejected">
+                        <button type="submit" class="btn btn-sm btn-reject" data-target-table="onderzoeken">Afkeuren</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="7" class="text-center">Geen onderzoeken in afwachting</td>
+        </tr>
+    {% endif %}
+{% elif status_id == 2 %}
+    {% if onderzoeken %}
+        {% for onderzoek in onderzoeken %}
+            <tr>
+                <td>{{ onderzoek.titel }}</td>
+                <td>{{ onderzoek.status_naam or "Onbekend" }}</td>
+                <td>{{ onderzoek.start_datum }}</td>
+                <td>{{ onderzoek.eind_datum }}</td>
+                <td>{{ onderzoek.type_onderzoek }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="6" class="text-center">Geen afgekeurde onderzoeken</td>
+        </tr>
+    {% endif %}
+{% else %}
+    <tr>
+        <td colspan="7" class="text-center">Invalide status opgegeven</td>
+    </tr>
+{% endif %}

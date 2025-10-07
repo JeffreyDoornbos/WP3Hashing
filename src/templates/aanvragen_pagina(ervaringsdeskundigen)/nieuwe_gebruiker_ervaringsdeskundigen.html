@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundigen.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/nieuwe_gebruiker_ervaringsdeskundigen.js') }}"></script>
+    <title>Nieuwe gebruiker</title>
+</head>
+
+<body class="body"
+      style="background-image: url('{{ url_for('static', filename='images/achtergrond_accessibility3.0.png') }}');
+              background-size: 100% 100% ;
+              background-repeat: no-repeat;">
+
+<!--Header + navigatie -->
+<header>
+    <nav>
+        <ul class="header">
+            <li>
+                {#                TODO veranderen naar een logische pagina#}
+                <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Accessibility">
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <div class="header">
+        <h1>Registreren</h1>
+    </div>
+<form id="formulier_gebruikers" class="form1" action="/register" method="POST">
+    <div class="input-control">
+        <label for="voornaam">Voornaam</label>
+        <input type="text" name="voornaam" id="voornaam" placeholder="Typ hier uw voornaam">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="achternaam">Achternaam</label>
+        <input type="text" name="achternaam" id="achternaam" placeholder="Typ hier uw achternaam">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="postcode">Postcode</label>
+        <input type="text" name="postcode" id="postcode" placeholder="Typ hier uw postcode">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="geslacht">Geslacht</label>
+        <input type="text" name="geslacht" id="geslacht" placeholder="Typ hier uw geslacht">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email" placeholder="Typ hier uw e-mail">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="password">Wachtwoord</label>
+        <input type="password" name="password" id="password" placeholder="Voer een wachtwoord in">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="telefoonnummer">Telefoonnummer</label>
+        <input type="number" name="telefoonnummer" id="telefoonnummer" placeholder="Typ hier uw telefoonnummer">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="geboortedatum">Geboortedatum</label>
+        <input type="date" name="geboortedatum" id="geboortedatum" placeholder="Typ hier uw geboortedatum">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="type_beperking">Type beperking</label>
+        <input type="text" name="type_beperking" id="type_beperking"
+               placeholder="Klik hier uw type beperking aan (meerdere mogelijk)">
+        <span class="error"></span>
+    </div>
+    <div class="input-control">
+        <label for="gebruikte_hulpmiddelen">Gebruikte hulpmiddelen</label>
+        <input type="text" name="gebruikte_hulpmiddelen" id="gebruikte_hulpmiddelen"
+               placeholder="Typ hier uw gebruikte hulpmiddelen">
+    </div>
+    <div class="input-control">
+        <label for="kort_voorstellen">Kort voorstellen</label>
+        <input type="text" name="kort_voorstellen" id="kort_voorstellen" placeholder="Vertel hier wat over uzelf">
+    </div>
+    <div class="input-control">
+        <label for="bijzonderheden">Bijzonderheden</label>
+        <input type="text" name="bijzonderheden" id="bijzonderheden"
+               placeholder="Hier kunt u uw bijzonderheden invullen">
+    </div>
+    <div class="input-control">
+        <label for="akkoord_voorwaarden">Akkoord voorwaarden</label>
+        <a style="padding: 15px; text-align: right;" href="{{ url_for('ervaringsdeskundige_blueprint.voorwaarden') }}">Klik
+            hier voor de voorwaarden!</a>
+        <input type="checkbox" name="akkoord_voorwaarden" id="akkoord_voorwaarden">
+        <span class="error"></span>
+    </div>
+
+    {#      Tweede deel#}
+    <div class="input-control">
+        <label for="Toezichthouder">Toezichthouder</label>
+        <input type="radio" name="toezichthouder" id="toezichthouder_ja" placeholder="Heeft u een toezichthouder?"> Ja
+        <input type="radio" name="toezichthouder" value="nee" id="toezichthouder_nee"> Nee
+        <span class="error"></span>
+    </div>
+    {#      toezichthouder = ja, verder vragen#}
+    <div class="input-control" id="heeft_toezichthouder" style="display: none;">
+        <div class="input-control">
+            <label for="naam_voogd_toezichthouder">Naam van uw voogd/toezichthouder</label>
+            <input type="text" name="naam_voogd_toezichthouder" id="naam_voogd_toezichthouder"
+                   placeholder="Typ hier de naam van uw voogd/toezichthouder">
+            <span class="error"></span>
+        </div>
+        <div class="input-control">
+            <label for="e_mailadres_voogd_toezichthouder">E-mailadres van uw voogd/toezichthouder</label>
+            <input type="text" name="e_mailadres_voogd_toezichthouder" id="e_mailadres_voogd_toezichthouder"
+                   placeholder="Typ hier uw e-mailadres van uw voogd/toezichthouder">
+            <span class="error"></span>
+        </div>
+        <div class="input-control">
+            <label for="telefoonnummer_voogd_toezichthouder">Telefoonnummer van uw voogd/toezichthouder</label>
+            <input type="text" name="telefoonnummer_voogd_toezichthouder" id="telefoonnummer_voogd_toezichthouder"
+                   placeholder="Typ hier uw telefoonnummer van uw voogd/toezichthouder">
+            <span class="error"></span>
+        </div>
+    </div>
+
+    {#      Verder met de rest van de vragen#}
+    <div class="input-control">
+        <label for="voorkeur_benadering">Voorkeur voor benadering</label>
+        <input type="text" name="voorkeur_benadering" id="voorkeur_benadering"
+               placeholder="Klik hier uw voorkeur voor benadering.">
+        <span class="error" id="error-voorkeur_benadering"></span>
+    </div>
+    <div class="input-control">
+        <label for="type_onderzoek">Voorkeur type onderzoek</label>
+        <input type="text" name="type_onderzoek" id="type_onderzoek" placeholder="klik hier uw type_onderzoek aan">
+        <span class="error" id="error-type_onderzoek"></span>
+    </div>
+    <div class="input-control">
+        <label for="bijzonderheden_beschikbaarheid">Bijzonderheden beschikbaarheid</label>
+        <input type="text" name="bijzonderheden_beschikbaarheid" id="bijzonderheden_beschikbaarheid"
+               placeholder="Typ hier uw bijzonderheden over uw beschikbaarheid">
+    </div>
+    <button class="button" type="submit">Submit</button>
+    <button class="button" type="button">Cancel</button>
+</form>
+
+</body>
+</html>

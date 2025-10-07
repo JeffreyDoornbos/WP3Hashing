@@ -1,0 +1,16 @@
+Verwijder een bestaande organisatie
+---
+tags: 
+- Organisaties
+produces:
+  application/json
+parameters:
+- name: id
+  in: path
+  type: integer
+  required: true
+responses:
+  200:
+    description: Een organisatie is succesvol verwijdert
+  415:
+    description: Het id miste of bestond niet

@@ -1,0 +1,43 @@
+.info-container {
+    font-family: Nunito, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: left;
+    display: grid;
+    border-radius: 10px;
+    padding: 15px 15px 20px 20px;
+    margin: 50px auto;
+    max-width: 1200px;
+    max-height: 900px;
+    background-color : rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /*color: #2b4de6;*/
+    border: 1px solid #eaeaea;
+}
+
+.info h2 {
+    color: #212c53;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.info-links {
+    padding-right: 20px;
+    min-width: 300px;
+}
+
+.info-rechts {
+    /*flex: 1;*/
+    min-width: 300px;
+}
+
+.table2 {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table2 th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}

@@ -1,0 +1,40 @@
+    /* Navbar styling met volledige blauwe achtergrond */
+    .navbar {
+      box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.2);
+      background-color: #2B50EC; /* Blauwe achtergrond */
+      height: 75px;
+      margin-bottom: 20px;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #fff !important;
+      font-size: 1.5rem;
+    }
+    .navbar-nav .nav-link {
+      font-weight: bold;
+      color: #fff !important;
+      margin-right: 20px;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #cce6ff !important;
+    }
+    .naam {
+      margin: 0;
+      color: #fff;
+    }
+    .logout {
+      color: #ff6b6b;
+      font-weight: bold;
+      margin-left: 30px;
+    }
+    .logout:hover {
+      color: #ff8787;
+    }
+    /* Zorg dat de collapse ook blauw is */
+    .navbar-collapse,
+    .collapse.navbar-collapse,
+    .collapse.show {
+      background-color: #2B50EC !important;
+      padding: 10px !important;
+      margin: 0 !important;
+    }

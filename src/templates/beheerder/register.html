@@ -1,0 +1,17 @@
+<form action="{{url_for('beheerders_blueprint.register_beheerder')}}" method="post" style="display: flex; flex-direction: column; max-width: 25%;">
+    <label for="voornaam">Voornaam:</label>
+    <input type="text" name="voornaam" id="voornaam" required style="margin-bottom: 10px;">
+    <label for="achternaam">Achternaam:</label>
+    <input type="text" name="achternaam" id="achternaam" required style="margin-bottom: 10px;">
+    <label for="postcode">Postcode:</label>
+    <input type="text" name="postcode" id="postcode" required style="margin-bottom: 10px;">
+    <label for="geslacht">Geslacht:</label>
+    <input type="text" name="geslacht" id="geslacht" required style="margin-bottom: 10px;">
+    <label for="telefoonnr">Telefoon nummer:</label>
+    <input type="tel" name="telefoonnr" id="telefoonnr" required style="margin-bottom: 10px;">
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required style="margin-bottom: 10px;">
+    <label for="wachtwoord">Wachtwoord:</label>
+    <input type="password" name="wachtwoord" id="wachtwoord" required style="margin-bottom: 10px;">
+    <button type="submit">Register</button>
+</form>

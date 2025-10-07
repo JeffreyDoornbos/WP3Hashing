@@ -1,0 +1,19 @@
+Maak een nieuwe organisatie aan
+---
+tags: 
+- Organisaties
+consumes:
+  application/json
+produces:
+  application/json
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: './apidefinitions/#/Organisatie'
+responses:
+  200:
+    description: Een organisatie is succesvol aangemaakt
+  415:
+    description: De body was niet in het juiste formaat of miste vereiste data

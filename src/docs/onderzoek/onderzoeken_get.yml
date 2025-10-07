@@ -1,0 +1,35 @@
+Haal een lijst met meerdere onderzoeken op
+---
+tags:
+- Onderzoeken
+produces:
+  application/json
+parameters:
+- name: limit
+  in: query
+  schema:
+    type: integer
+    minimum: 1
+    maximum: 50
+  required: false
+- name: offset
+  in: query
+  schema:
+    type: integer
+    minimum: 0
+  required: false
+responses:
+  200:
+    description: Een lijst met onderzoeken
+    schema:
+      type: array
+      items:
+        $ref: './apidefinitions/#/Onderzoek'
+  403:
+    description: De API sleutel ontbrak uit het verzoek of had niet voldoende rechten om deze actie uit te voeren
+    schema:
+      $ref: './apidefinitions/#/Error'
+  404:
+    description: Er was geen onderzoek gevonden met het verzochte id binnen deze organisatie
+    schema:
+      $ref: './apidefinitions/#/Error'

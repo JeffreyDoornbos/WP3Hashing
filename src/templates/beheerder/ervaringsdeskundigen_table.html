@@ -1,0 +1,55 @@
+{% if status_id == 3 %}
+    {% if ervaringsdeskundigen %}
+        {% for ervaringsdeskundige in ervaringsdeskundigen %}
+            <tr>
+                <td>{{ ervaringsdeskundige.voornaam }} {{ ervaringsdeskundige.achternaam }}</td>
+                <td>{{ ervaringsdeskundige.status_naam or "Onbekend" }}</td>
+                <td>{{ ervaringsdeskundige.geslacht }}</td>
+                <td>{{ ervaringsdeskundige.geboorte_datum }}</td>
+                <td>{{ ervaringsdeskundige.gebruikte_hulpmiddelen}}</td>
+                <td>{{ ervaringsdeskundige.bijzonderheden}}</td>
+                <td>
+                    <form method="post" action="{{ url_for('beheerders_blueprint.update_ervaringsdeskundige_status', ervaringsdeskundige_id=ervaringsdeskundige.id) }}">
+                        <input type="hidden" name="status" value="approved">
+                        <button type="submit" class="btn btn-sm btn-approve" data-target-table="ervaringsdeskundigen">Goedkeuren</button>
+                    </form>
+                    <form method="post" action="{{ url_for('beheerders_blueprint.update_ervaringsdeskundige_status', ervaringsdeskundige_id=ervaringsdeskundige.id) }}">
+                        <input type="hidden" name="status" value="rejected">
+                        <button type="submit" class="btn btn-sm btn-reject" data-target-table="ervaringsdeskundigen">Afkeuren</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="7" class="text-center">
+                Geen nieuwe registraties
+            </td>
+        </tr>
+    {% endif %}
+{% elif status_id == 2 %}
+    {% if ervaringsdeskundigen %}
+        {% for ervaringsdeskundige in ervaringsdeskundigen %}
+            <tr>
+                <td>{{ ervaringsdeskundige.voornaam }} {{ ervaringsdeskundige.achternaam }}</td>
+                <td>{{ ervaringsdeskundige.status_naam or "Onbekend" }}</td>
+                <td>{{ ervaringsdeskundige.geslacht }}</td>
+                <td>{{ ervaringsdeskundige.geboorte_datum }}</td>
+                <td>{{ ervaringsdeskundige.gebruikte_hulpmiddelen}}</td>
+                <td>{{ ervaringsdeskundige.bijzonderheden}}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="6" class="text-center">
+                Geen afgekeurde ervaringsdeskundigen
+            </td>
+        </tr>
+    {% endif %}
+{% else %}
+    <tr>
+        <td colspan="6" class="text-center">
+            Invalide status opgegeven
+        </td>
+    </tr>
+{% endif %}

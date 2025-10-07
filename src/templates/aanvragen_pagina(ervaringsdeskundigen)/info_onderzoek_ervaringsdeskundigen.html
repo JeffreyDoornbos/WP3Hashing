@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundigen.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundige_square.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/inschrijven_uitschrijven.js') }}"></script>
+    <title>Informatie onderzoek</title>
+</head>
+
+<body class="body">
+
+<!--Header + navigatie -->
+<header>
+    <nav>
+        <ul class="header">
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Lopende onderzoeken</a></li>
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.profiel_ervaringsdeskundigen') }}">Mijn gegevens</a></li>
+{#          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.mailbox_ervaringsdeskundigen') }}">Notificaties/mailbox</a></li>#}
+          <li><a href="https://www.accessibility.nl/contact">Contact</a></li>
+          <li>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Accessibility">
+            </a>
+          </li>
+          <li>
+              <p> Welkom {{ user[1] }}</p>
+          </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="info-container" role="region" aria-labelledby="onderzoek-info">
+        {% for onderzoek in onderzoeken %}
+
+        <!--linker kant -->
+        <div class="info-links">
+            <h3>{{ onderzoek[1] }}</h3>
+            <p>{{ onderzoek[2] }}</p>
+            <h4>datum beschikbaarheid</h4>
+            <p>Van {{ onderzoek[10] if onderzoek[10] else "Onbekend" }} tot en met {{ onderzoek[11] if onderzoek[11] else "onbekend" }}</p>
+            <p class="beschikbaar">
+                {% if onderzoek[3] == 1 %}
+                Beschikbaar
+                {% else %}
+                Niet beschikbaar
+                {% endif %}
+        </div>
+
+        <!--Rechter kant -->
+        <div class="info-rechts" role="region" aria-labelledby="tabel-gegevens">
+            <table>
+                <tr>
+                    <th>Doelgroep(en)</th>
+                    <th>Locatie</th>
+                    <th>Beloning</th>
+                    <th>Beloning bedrag</th>
+                    <th>Leeftijd vanaf</th>
+                    <th>Leeftijd tot</th>
+                </tr>
+
+                <tr>
+                    <td>{{ onderzoek[5] }}</td>
+                    <td>{{ onderzoek[4] }}</td>
+                    <td>
+                        {% if onderzoek[8] == 1 %}
+                        Met beloning
+                        {%  else %}
+                        Zonder beloning
+                        {% endif %}
+                    </td>
+                    <td>{{ onderzoek[9] if onderzoek[9] else "0 Euro" }}</td>
+                    <td>{{ onderzoek[10] }}</td>
+                    <td>{{ onderzoek[10] }}</td>
+                </tr>
+        {% else %}
+        <tr>
+            <td colspan="14">Geen onderzoeken beschikbaar.</td>
+        </tr>
+        {% endfor %}
+            </table>
+        </div>
+
+        <!--Buttons onderaan -->
+        <div role="region" aria-labelledby="onderzoek-buttons">
+            {% for onderzoek in onderzoeken %}
+                {% if onderzoek[0] in deelnemende_onderzoeken %}
+                <form action="{{ url_for('ervaringsdeskundige_blueprint.api_inschrijven_uitschrijven', onderzoek_id=onderzoek[0], deelnemende_onderzoeken=1, beschikbaar=onderzoek[3]) }}" method="POST">
+                    <input type="hidden" name="onderzoek" value="{{  onderzoek[0] }}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="button_uitschrijven">Uitschrijven</button>
+                </form>
+                {% elif onderzoek[3]|int == 1 %}
+                <form action="{{ url_for('ervaringsdeskundige_blueprint.api_inschrijven_uitschrijven', onderzoek_id=onderzoek[0], deelnemende_onderzoeken=0, beschikbaar=1) }}" method="POST">
+                    <input type="hidden" name="onderzoek" value="{{  onderzoek[0] }}">
+                    <input type="hidden" name="_method" value="POST">
+                    <button type="submit" class="button">Inschrijven</button>
+                </form>
+                {% else %}
+                    <span>Niet beschikbaar</span>
+                {% endif %}
+            {% endfor %}
+
+                     <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}" class="button" >Terug</a>
+        </div>
+
+</div>
+
+</body>
+</html>

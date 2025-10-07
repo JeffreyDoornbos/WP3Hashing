@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profielbeheer</title>
+  <style>
+
+
+/* Zal dit er nog uit gaan halen kreeg het werkend om het in aparte css te doen
+geen idee waarom niet :( */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Profielbeheer</h2>
+    <form method="post" action="/profielbeheer">
+      <label for="voornaam">Voornaam</label>
+      <input type="text" id="voornaam" name="voornaam" value="{{ user.voornaam }}" required>
+      
+      <label for="achternaam">Achternaam</label>
+      <input type="text" id="achternaam" name="achternaam" value="{{ user.achternaam }}" required>
+      
+      <label for="postcode">Postcode</label>
+      <input type="text" id="postcode" name="postcode" value="{{ user.postcode }}" required>
+      
+      <label for="geslacht">Geslacht</label>
+      <select id="geslacht" name="geslacht" required>
+        <option value="man" {% if user.geslacht == 'man' %}selected{% endif %}>Man</option>
+        <option value="vrouw" {% if user.geslacht == 'vrouw' %}selected{% endif %}>Vrouw</option>
+        <option value="anders" {% if user.geslacht == 'anders' %}selected{% endif %}>Anders</option>
+      </select>
+      
+      <label for="email">E-mailadres</label>
+      <input type="email" id="email" name="email" value="{{ user.email }}" required>
+      
+      <label for="telefoon">Telefoonnummer</label>
+      <input type="tel" id="telefoon" name="telefoonnr" value="{{ user.telefoonnr }}" required>
+      
+      <label for="geboorte_datum">Geboortedatum</label>
+      <input type="date" id="geboorte_datum" name="geboorte_datum" value="{{ user.geboorte_datum }}" required>
+      
+      <label for="gebruikte_hulpmiddelen">Gebruikte Hulpmiddelen</label>
+      <input type="text" id="gebruikte_hulpmiddelen" name="gebruikte_hulpmiddelen" value="{{ user.gebruikte_hulpmiddelen }}" required>
+      
+      <label for="kort_voorstellen">Kort Voorstellen</label>
+      <textarea id="kort_voorstellen" name="kort_voorstellen" required>{{ user.kort_voorstellen }}</textarea>
+      
+      <label for="bijzonderheden">Bijzonderheden</label>
+      <textarea id="bijzonderheden" name="bijzonderheden">{{ user.bijzonderheden }}</textarea>
+      
+      <label>
+        <input type="checkbox" name="voorwaarden" value="1" {% if user.voorwaarden %}checked{% endif %}>
+        Ik ga akkoord met de voorwaarden
+      </label>
+      
+      <label>
+        <input type="checkbox" name="toezichthouder_id" value="1" {% if user.toezichthouder_id %}checked{% endif %}>
+        Er is een toezichthouder/voogd betrokken
+      </label>
+      
+      <label for="voorkeur_benadering">Voorkeur Benadering</label>
+      <input type="text" id="voorkeur_benadering" name="voorkeur_benadering" value="{{ user.voorkeur_benadering }}" required>
+      
+      <label for="type_onderzoek">Type Onderzoek</label>
+      <input type="text" id="type_onderzoek" name="type_onderzoek" value="{{ user.type_onderzoek }}" required>
+      
+      <label for="bijzonderheden_beschikbaarheid">Bijzonderheden Beschikbaarheid</label>
+      <textarea id="bijzonderheden_beschikbaarheid" name="bijzonderheden_beschikbaarheid">{{ user.bijzonderheden_beschikbaarheid }}</textarea>
+      
+      <button type="submit">Opslaan</button>
+    </form>
+  </div>
+</body>
+</html>

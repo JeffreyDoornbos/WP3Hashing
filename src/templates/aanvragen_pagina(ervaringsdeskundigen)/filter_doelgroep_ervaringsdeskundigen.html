@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundigen.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/inschrijven_uitschrijven.js') }}"></script>
+    <title>Mijn doelgroepen</title>
+</head>
+
+<body class="body">
+
+<!--Header + navigatie -->
+<header>
+    <nav>
+        <ul class="header">
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Lopende onderzoeken</a></li>
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.profiel_ervaringsdeskundigen') }}">Mijn gegevens</a></li>
+{#          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.mailbox_ervaringsdeskundigen') }}">Notificaties/mailbox</a></li>#}
+          <li><a href="https://www.accessibility.nl/contact">Contact</a></li>
+          <li>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Accessibility">
+            </a>
+          </li>
+          <li>
+              <p> Welkom {{ user[1] }}</p>
+          </li>
+        </ul>
+    </nav>
+</header>
+
+<!--Form-->
+    <form action="{{ url_for('ervaringsdeskundige_blueprint.filter_doelgroep_ervaringsdeskundigen') }}" class="form2">
+        <div>
+            <label class="label2" for="search">Zoekwoord:</label>
+            <input class="input2" type="text" id="search" name="search" value="{{ request.args.get('search', search) }}" placeholder="Zoek onderzoek...">
+        </div>
+
+        <div>
+            <label class="label2" for="doelgroep">Filter per doelgroep:</label>
+            <select class="input2" id="doelgroep" name="doelgroep">
+                <option value="">Eigen doelgroepen</option>
+                {% for d in eigen_doelgroepen %}
+                <option value="{{ d }}" {% if d == request.args.get('doelgroep', doelgroep) %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label class="label2" for="beschikbaar">Toon beschikbare onderzoeken:</label>
+            <input class="input2" type="checkbox" id="beschikbaar" name="beschikbaar" value="1" {% if request.args.get('beschikbaar', beschikbaar) %}checked{% endif %}>
+        </div>
+
+
+        <div>
+            <button type="submit" id="search_button" class="button">Zoek</button>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.filter_doelgroep_ervaringsdeskundigen') }}" class="button">Ververs</a>
+        </div>
+    </form>
+
+<!--nav-->
+<nav>
+    <ul class="navbar2">
+        <li>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Lopende onderzoeken</a>
+        </li>
+        <li>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.filter_doelgroep_ervaringsdeskundigen') }}" class="active">Mijn doelgroepen</a>
+        </li>
+        <li>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.filter_deelnames_ervaringsdeskundigen') }}">Mijn deelnames</a>
+        </li>
+    </ul>
+</nav>
+
+<!--Tabel-->
+<table class="table">
+    <tr>
+        <th>Titel</th>
+        <th>Beschikbaar</th>
+        <th>Locatie</th>
+        <th>Doelgroep</th>
+        <th>Leeftijd van</th>
+        <th>Leeftijd tot</th>
+        <th>Met beloning</th>
+        <th>Beloning</th>
+        <th>Datum van</th>
+        <th>Datum tot</th>
+        <th>Deelnemen/uitschrijven</th>
+        <th>Info/wijzigen</th>
+    </tr>
+
+    {% for onderzoek in onderzoeken %}
+    <tr>
+        <td>{{ onderzoek[1] }}</td>
+        <td>
+            {% if onderzoek[2] == 1 %}
+            Beschikbaar
+            {%  else %}
+            Niet beschikbaar
+            {% endif %}
+        </td>
+        <td>{{ onderzoek[3] }}</td>
+        <td>{{ onderzoek[4].split(', ')[0] if onderzoek [4] }}</td>
+        <td>{{ onderzoek[5] }}</td>
+        <td>{{ onderzoek[6] }}</td>
+        <td>
+            {% if onderzoek[7] == 1 %}
+            Met beloning
+            {%  else %}
+            Zonder beloning
+            {% endif %}
+        </td>
+        <td>{{ onderzoek[8] if onderzoek[8] else "0 Euro" }}</td>
+        <td>{{ onderzoek[9] }}</td>
+        <td>{{ onderzoek[10] }}</td>
+
+        <td>
+            {% if onderzoek[0] in deelnemende_onderzoeken %}
+            <form action="{{ url_for('ervaringsdeskundige_blueprint.api_inschrijven_uitschrijven', onderzoek_id=onderzoek[0], deelnemende_onderzoeken=1, beschikbaar=onderzoek[2]) }}" method="POST">
+                <input type="hidden" name="onderzoek" value="{{  onderzoek[0] }}">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="button_uitschrijven">Uitschrijven</button>
+            </form>
+            {% elif onderzoek[2]|int == 1 %}
+            <form action="{{ url_for('ervaringsdeskundige_blueprint.api_inschrijven_uitschrijven', onderzoek_id=onderzoek[0], deelnemende_onderzoeken=0, beschikbaar=1) }}" method="POST">
+                <input type="hidden" name="onderzoek" value="{{  onderzoek[0] }}">
+                <input type="hidden" name="_method" value="POST">
+                <button type="submit" class="button">Inschrijven</button>
+            </form>
+            {% else %}
+                <span>Niet beschikbaar</span>
+            {% endif %}
+        </td>
+
+        <td>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.info_onderzoek_ervaringsdeskundigen', onderzoek_id=onderzoek[0]) }}" class="button" >Info/wijzigen</a>
+        </td>
+    </tr>
+    {% else %}
+      <tr>
+            <td colspan="14">Geen onderzoeken beschikbaar.</td>
+      </tr>
+    {% endfor %}
+</table>
+
+      <nav class="pagination">
+        {% if show_first %}
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.filter_doelgroep_ervaringsdeskundigen', page=1, search=search, doelgroep=doelgroep, beschikbaar=beschikbaar) }}">Eerste pagina</a>
+        {% endif %}
+
+        {% if prev_page %}
+                <a href="{{ url_for('ervaringsdeskundige_blueprint.filter_doelgroep_ervaringsdeskundigen', page=prev_page, search=search, doelgroep=doelgroep, beschikbaar=beschikbaar) }}">Vorige</a>
+        {% endif %}
+
+        {% for link in page_numbers %}
+              <a href="{{ link }}" class="{% if loop.index == page %}active{% endif %}">
+                {{ loop.index }}
+              </a>
+        {% endfor %}
+
+        {% if next_page %}
+                <a href="{{ url_for('ervaringsdeskundige_blueprint.filter_doelgroep_ervaringsdeskundigen', page=next_page, search=search, doelgroep=doelgroep, beschikbaar=beschikbaar) }}">Volgende</a>
+        {% endif %}
+
+        {% if show_last %}
+                <a href="{{ url_for('ervaringsdeskundige_blueprint.filter_doelgroep_ervaringsdeskundigen', page=total_pages, search=search, doelgroep=doelgroep, beschikbaar=beschikbaar) }}">Laatste pagina</a>
+        {% endif %}
+      </nav>
+
+<!--Footer-->
+<footer>
+
+</footer>
+
+
+</body>
+</html>

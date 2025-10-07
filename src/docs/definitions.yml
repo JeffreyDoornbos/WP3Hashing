@@ -1,0 +1,170 @@
+Ervaringsdeskundige:
+  type: object
+  properties:
+    id:
+      type: integer
+    voornaam:
+      type: string
+    achternaam:
+      type: string
+    postcode:
+      type: string
+    geslacht:
+      type: string
+    telefoonnr:
+      type: string
+    email:
+      type: string
+    geboorte_datum:
+      type: string
+    gebruikte_hulpmiddelen:
+      type: string
+    kort_voorstellen:
+      type: string
+    bijzonderheden:
+      type: string
+    toezichthouder:
+      type: object
+      $ref: '#/Toezichthouder'
+    voorkeur_benadering:
+      type: string
+    type_onderzoek:
+      type: string
+    bijzonderheden_beschikbaarheid:
+      type: string
+    beperkingen:
+      type: array
+      items:
+        $ref: '#/Beperking'
+    status:
+      type: object
+      $ref: '#/Status'
+  required:
+    - voornaam
+    - achternaam
+    - postcode
+    - telefoonnr
+    - email
+    - geboorte_datum
+    - toezichthouder
+Toezichthouder:
+  type: object
+  properties:
+    id:
+      type: integer
+    naam:
+      type: string
+    email:
+      type: string
+    telefoonnr:
+      type: string
+  required:
+    - naam
+    - email
+    - telefoonnr
+Beperking:
+  type: object
+  properties:
+    id:
+      type: integer
+    naam:
+      type: string
+    category:
+      type: object
+      $ref: '#/Beperkingscategorie'
+  required:
+    - naam
+    - category
+Beperkingscategorie:
+  type: object
+  properties:
+    id:
+      type: integer
+    naam:
+      type: string
+  required:
+    - naam
+Organisatie:
+  type: object
+  properties:
+    id:
+      type: integer
+    naam:
+      type: string
+    type:
+      type: string
+    website:
+      type: string
+    beschrijving:
+      type: string
+    contactpersoon:
+      type: string
+    email:
+      type: string
+    telefoonnr:
+      type: string
+    overige_details:
+      type: string
+  required:
+    - naam
+    - type
+    - contactpersoon
+    - email
+Status:
+  type: object
+  properties:
+    id:
+      type: integer
+    beschrijving:
+      type: string
+  required:
+    - beschrijving
+Onderzoek:
+  type: object
+  properties:
+    id:
+      type: integer
+    titel:
+      type: string
+    status:
+      type: object
+      $ref: '#/Status'
+    beschikbaar:
+      type: boolean
+    beschrijving:
+      type: string
+    start_datum:
+      type: string
+    eind_datum:
+      type: string
+    type_onderzoek:
+      type: string
+    locatie:
+      type: string
+    beloning:
+      type: string
+    doelgroep_leeftijd_start:
+      type: integer
+    doelgroep_leeftijd_eind:
+      type: integer
+    beperkingen:
+      type: array
+      items:
+        $ref: '#/Beperking'
+    organisatie:
+      type: object
+      $ref: '#/Organisatie'
+  required:
+    - titel
+    - beschikbaar
+    - start_datum
+    - eind_datum
+    - type_onderzoek
+    - doelgroep_leeftijd_start
+    - doelgroep_leeftijd_eind
+    
+Error:
+  type: object
+  properties:
+    error:
+      type: string

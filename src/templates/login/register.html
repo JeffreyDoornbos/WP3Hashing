@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    {% block additional_css %}
+    <link rel="stylesheet" href="/static/styles/register.css">
+  {% endblock %}
+</head>
+<body>
+    <form method="POST" action="{{ url_for('users_blueprint.register') }}">
+        <h1>Register</h1>
+        <label for="voornaam">Voornaam:</label>
+        <input type="text" id="voornaam" name="voornaam" required><br>
+        <label for="achternaam">Achternaam:</label>
+        <input type="text" id="achternaam" name="achternaam" required><br>
+        <label for="postcode">Postcode:</label>
+        <input type="text" id="postcode" name="postcode"><br>
+        <label for="geslacht">Geslacht:</label>
+        <input type="text" id="geslacht" name="geslacht" required><br>
+        <label for="telefoonnummer">Telefoonnummer:</label>
+        <input type="text" id="telefoonnummer" name="telefoonnummer" required><br>
+        <label for="emailadres">E-mailadres:</label>
+        <input type="email" id="emailadres" name="email" required><br>
+        <label for="password">Wachtwoord:</label>
+        <input type="password" id="password" name="password" required><br>
+        <label for="geboortedatum">Geboortedatum:</label>
+        <input type="date" id="geboortedatum" name="geboortedatum" required><br>
+        <label for="gebruikte_hulpmiddelen">Hulpmiddelen:</label>
+        <input type="text" id="gebruikte_hulpmiddelen" name="gebruikte_hulpmiddelen"><br>
+        <label for="kort_voorstellen">Korte introductie:</label>
+        <textarea id="kort_voorstellen" name="kort_voorstellen"></textarea><br>
+        <label for="bijzonderheden">Bijzonderheden:</label>
+        <textarea id="bijzonderheden" name="bijzonderheden"></textarea><br>
+        <label for="akkoord_voorwaarden">Akkoord met de voorwaarden:</label>
+        <input type="checkbox" id="akkoord_voorwaarden" name="akkoord_voorwaarden" value="1"><br>
+        <label for="toezichthouder">Toezichthouder:</label>
+        <input type="text" id="toezichthouder" name="toezichthouder"><br>
+        <label for="voorkeur_benadering">Benadering voorkeur:</label>
+        <input type="text" id="voorkeur_benadering" name="voorkeur_benadering" required><br>
+        <label for="type_onderzoek">Type onderzoek:</label>
+        <input type="text" id="type_onderzoek" name="type_onderzoek" required><br>
+        <label for="bijzonderheden_beschikbaarheid">Bijzonderheden beschikbaarheid:</label>
+        <textarea id="bijzonderheden_beschikbaarheid" name="bijzonderheden_beschikbaarheid"></textarea><br>
+        <button type="submit">Registreren</button>
+    </form>
+</body>
+</html>

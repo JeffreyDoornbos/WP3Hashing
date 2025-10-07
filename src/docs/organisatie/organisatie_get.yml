@@ -1,0 +1,16 @@
+Zoek een organisatie gebaseerd op hun id
+---
+tags:
+- Organisaties
+produces:
+  application/json
+parameters:
+- name: id
+  in: path
+  type: integer
+  required: true
+responses:
+  200:
+    description: Een organisatie verbonden aan het verzochte id
+    schema:
+      $ref: './apidefinitions/#/Organisatie'

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Beheerders Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% block additional_css %}
+  <link rel="stylesheet" href="/static/styles/beheerdersdashboard.css">
+  {% endblock %}
+
+  <!-- Bootstrap CSS via CDN -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoZyNRt19m9MawMu6zNczZ6OL5X8YOrhcLjE0PEMdFN7C9h" 
+    crossorigin="anonymous"
+  >
+
+  {% include "components/navbar.html" %}
+</head>
+<body>
+  <!-- Skip to main content link -->
+  <a href="#main-content" class="skip-link">Direct naar hoofdinhoud</a>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Container: In Afwachting -->
+    <div class="container container-custom" role="region" aria-labelledby="afwachting-heading">
+      <h2 id="dashboard-heading">Beheerders Dashboard - Onderzoeken</h2>
+      <h3 id="afwachting-heading">In Afwachting</h3>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle" aria-describedby="afwachting-description">
+          <caption id="afwachting-description" class="visually-hidden">
+            Tabel met onderzoeken die in afwachting zijn
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Titel</th>
+              <th scope="col">Status</th>
+              <th scope="col">Start Datum</th>
+              <th scope="col">Eind Datum</th>
+              <th scope="col">Type Onderzoek</th>
+              <th scope="col">Acties</th>
+            </tr>
+          </thead>
+          <tbody data-target-status="3" data-target-table="onderzoeken"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Container: Afgekeurde Onderzoeken -->
+    <div class="container container-custom" role="region" aria-labelledby="afgekeurd-heading">
+      <h3 id="afgekeurd-heading">Afgekeurde Onderzoeken</h3>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle" aria-describedby="afgekeurd-description">
+          <caption id="afgekeurd-description" class="visually-hidden">
+            Tabel met afgekeurde onderzoeken
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Titel</th>
+              <th scope="col">Status</th>
+              <th scope="col">Start Datum</th>
+              <th scope="col">Eind Datum</th>
+              <th scope="col">Type Onderzoek</th>
+            </tr>
+          </thead>
+          <tbody data-target-status="2" data-target-table="onderzoeken"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS (optioneel, voor bijvoorbeeld dropdowns) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+v5I8uJ0B9xXYzSzZr6TzMDTzMd2x" 
+    crossorigin="anonymous">
+  </script>
+  <script src="/static/scripts/beheerders_dash.js"></script>
+</body>
+</html>

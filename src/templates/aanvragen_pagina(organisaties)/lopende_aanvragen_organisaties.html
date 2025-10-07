@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../aanvragen_pagina(organisaties)/css/lopende_aanvragen_organisaties.css">
+    <script src="../aanvragen_pagina(organisaties)/javascript/lopende_aanvragen_organisaties.js"></script>
+    <title>Lopende aanvragen organisaties</title>
+</head>
+
+<body>
+
+<!--Header + oude van toetsvragen-->
+<header>
+    <nav>
+        <ul class="ul">
+          <li><a href="{{ url_for('lopende_aanvragen_organisaties') }}">Lopende onderzoeken</a></li>
+          <li><a href="{{ url_for('organisatie') }}">Organisatie</a></li>
+          <li><a href="{{ url for('notificaties') }}">Notificaties/mailbox</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          <li>
+            <img src="??.png" alt="Logo">
+          </li>
+<!--          <li>-->
+<!--              <a class="second-button" href="{{ url_for('inlog') }}">Login</a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--              <a class="first-button" href="https://www.test-correct.nl/welcome">Boek online demo</a>-->
+<!--          </li>-->
+        </ul>
+    </nav>
+</header>
+
+<!--navigatie form van toetsvragen-->
+    <form action="{{ url_for('toetsvragen') }}">
+        <div>
+            <label for="search">Zoekwoord:</label>
+            <input type="text" id="search" name="search" value="{{ request.args.get('search','') }}" placeholder="Zoek vraag...">
+        </div>
+
+        <div>
+            <label for="doelgroep">Filter per doelgroep:</label>
+            <select id="doelgroep" name="doelgroep">
+                <option value="">Alle doelgroepen</option>
+                {% for d in unieke_doelgroepen %}
+                <option value="{{ d }}" {% if d == request.args.get(doelgroep) %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="status">Toon goedgekeurde onderzoeken:</label>
+            <input type="checkbox" id="status" name="status" value="1" {% if request.args.get(status) %}checked{% endif %}>
+        </div>
+
+
+        <div>
+            <button type="submit" class="first-button">Zoeken</button>
+            <a href="{{ url_for('lopende_aanvragen_organisaties') }}" class="first-button">Ververs</a>
+        </div>
+    </form>
+
+<!--onder navigatie + zoeken/filter-->
+<nav>
+
+</nav>
+
+<!--Side navigatie-->
+<aside>
+
+</aside>
+
+<!--Tabel-->
+<table>
+    <tr>
+        <td>Titel</td>
+        <td>Aanmaakdatum</td>
+        <td>Type onderzoek</td>
+        <td>Doelgroep</td>
+        <td>Leeftijd van</td>
+        <td>Leeftijd tot</td>
+        <td>Met beloning</td>
+        <td>Beschikbaar</td>
+        <td>Datum van</td>
+        <td>Datum tot</td>
+        <td>Status</td>
+        <td>Deelnemers (button)</td>
+        <td>Info/wijzigen (button)</td>
+    </tr>
+</table>
+
+<!--Footer-->
+<footer>
+
+</footer>
+
+      <table>
+      {% for vraag in vragen %}
+      <tr>
+         <td>{{ tabel[1] }}</td>
+         <td>{{ tabel[2] }}</td>
+         <td>{{ tabel[3] }}</td>
+         <td>{{ tabel[4] }}</td>
+         <td>{{ tabel[5] }}</td>
+         <td>{{ tabel[6] }}</td>
+         <td>{{ tabel[7] }}</td>
+         <td>{{ tabel[8] }}</td>
+         <td>{{ tabel[9] }}</td>
+         <td>{{ tabel[10] }}</td>
+         <td>{{ tabel[11] }}</td>
+         <td>
+            {% if tabel[12] %}
+                <a href="{{ url_for('deelnames_organisaties', gegevens_id=vraag[0]) }}" class="table-button" >Deelnames</a>
+            {% else %}
+                <a href="{{ url_for('indexeren', gegevens_id=vraag[0]) }}" class="table-button" >Leeg</a>
+            {% endif %}
+         </td>
+         <td>
+            {% if tabel[13] %}
+                <a href="{{ url_for('onderzoek_wijzigen', gegevens_id=vraag[0]) }}" class="table-button" >Info/wijzigen</a>
+            {% else %}
+                <a href="{{ url_for('verwijderen', gegevens_id=vraag[0]) }}" class="table-button" >Verwijderen</a>
+            {% endif %}
+         </td>
+      </tr>
+            {% else %}
+      <tr>
+            <td colspan="4">Geen onderzoeken beschikbaar.</td>
+      </tr>
+            {% endfor %}
+      </table>
+
+      <nav class="pagination">
+        {% if show_first %}
+            <a href="{{ url_for('lopende_aanvragen_organisaties', page=1, search=search, doelgroep=doelgroep, status=status) }}">Eerste pagina</a>
+        {% endif %}
+
+        {% if prev_page %}
+                <a href="{{ url_for('lopende_aanvragen_organisaties', page=prev_page, search=search, doelgroep=doelgroep, status=status) }}">Vorige</a>
+        {% endif %}
+
+        {% for link in page_numbers %}
+              <a href="{{ link }}" class="{% if loop.index == page %}active{% endif %}">
+                {{ loop.index }}
+              </a>
+        {% endfor %}
+
+        {% if next_page %}
+                <a href="{{ url_for('lopende_aanvragen_organisaties', page=next_page, search=search, doelgroep=doelgroep, status=status) }}">Volgende</a>
+        {% endif %}
+
+        {% if show_last %}
+                <a href="{{ url_for('lopende_aanvragen_organisaties', page=total_pages, search=search, doelgroep=doelgroep, status=status) }}">Laatste pagina</a>
+        {% endif %}
+      </nav>
+
+</body>
+</html>

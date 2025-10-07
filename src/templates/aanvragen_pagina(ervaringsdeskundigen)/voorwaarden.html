@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundigen.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{#    <script src="/static/aanvragen_pagina(ervaringsdeskundigen)/javascript/nieuwe_gebruiker_ervaringsdeskundigen.js"></script>#}
+    <title>Voorwaarden</title>
+</head>
+
+<body class="body"
+      style="background-image: url('{{ url_for('static', filename='images/achtergrond_accessibility3.0.png') }}');
+             background-size: 100% 100% ;
+             background-repeat: no-repeat;">
+
+<!--Header + navigatie -->
+<header>
+    <nav>
+        <ul class="header">
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Lopende onderzoeken</a></li>
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">mijn gegevens</a></li>
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Notificaties/mailbox</a></li>
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Contact</a></li>
+          <li>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+          </li>
+          <li>
+              <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Leeg</a>
+          </li>
+          <li>
+              <a href="https://www.google.nl/">Leeg</a>
+          </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="text">
+    <h2>Onze regels voor omgaan met jouw gegevens</h2>
+    <p>Welkom op onze website! We vinden het belangrijk dat jouw persoonlijke gegevens veilig zijn. Hier leggen we uit hoe we met jouw gegevens omgaan en wat jouw rechten zijn. Als je onze site gebruikt, ga je akkoord met deze regels.</p>
+
+    <h4>1. Welke gegevens verzamelen we?</h4>
+    <p>We verzamelen alleen gegevens die nodig zijn om jou te koppelen aan organisaties die onderzoeken doen. Dit kunnen bijvoorbeeld je naam, contactgegevens en informatie over jouw beperking zijn.</p>
+
+    <h4>2. Jij bepaalt wat er gebeurt</h4>
+    <p>We delen jouw gegevens alleen met organisaties als jij daar toestemming voor geeft. Zonder jouw toestemming doen we dit niet.</p>
+
+    <h4>3. Waarom gebruiken we jouw gegevens?</h4>
+    <ul>
+        <li>Jou te koppelen aan onderzoeken die bij je passen.</li>
+        <li>Onze diensten beter te maken.</li>
+    </ul>
+
+    <h4>4. Hoe beschermen we jouw gegevens?</h4>
+    <p>We doen er alles aan om jouw gegevens veilig te houden. We zorgen dat anderen er niet zomaar bij kunnen.</p>
+
+    <h4>5. Wat zijn jouw rechten?</h4>
+    <ul>
+        <li>Te zien welke gegevens we van je hebben.</li>
+        <li>Je gegevens aan te passen of te laten verwijderen.</li>
+        <li>Je toestemming in te trekken.</li>
+        <li>Een klacht in te dienen als je vindt dat we niet goed omgaan met jouw gegevens.</li>
+    </ul>
+
+    <h4>6. Hoelang bewaren we jouw gegevens?</h4>
+    <p>We bewaren jouw gegevens niet langer dan nodig is of verwijderen ze op jouw verzoek. Soms moeten we ze langer bewaren omdat dat volgens de wet moet.</p>
+
+    <h4>7. Vragen?</h4>
+    <p>Heb je vragen over deze regels of over jouw gegevens? Neem dan contact met ons op via <a href="https://www.accessibility.nl/">https://www.accessibility.nl/</a>.</p>
+
+    <p>We kunnen deze regels soms aanpassen, mocht dat gebeuren dan informeren we jou daarvan.</p>
+
+    <h4>Documentversie</h4>
+    <p style="font-family: nunito sans-serif; color: #2b4fea;">Voorbeeld / ontwikkeldocument, versie 01-01-2025</p>
+</div>

@@ -1,0 +1,45 @@
+{% if status_id == 3 %}
+    {% if deelnamen %}
+        {% for deelname in deelnamen %}
+            <tr>
+                <td>{{ deelname.expert_naam }}</td>
+                <td>{{ deelname.onderzoek_titel }}</td>
+                <td>{{ deelname.datum }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('beheerders_blueprint.update_deelnamen_status', deelname_id=deelname.id) }}" class="d-inline">
+                        <input type="hidden" name="status" value="approved">
+                        <button type="submit" class="btn btn-sm btn-approve" data-target-table="deelnamen">Goedkeuren</button>
+                    </form>
+                    <form method="post" action="{{ url_for('beheerders_blueprint.update_deelnamen_status', deelname_id=deelname.id) }}" class="d-inline">
+                        <input type="hidden" name="status" value="rejected">
+                        <button type="submit" class="btn btn-sm btn-reject" data-target-table="deelnamen">Afkeuren</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4" class="text-center">Geen deelnamen in afwachting</td>
+        </tr>
+    {% endif %}
+{% elif status_id == 2 %}
+    {% if deelnamen %}
+        {% for deelname in deelnamen %}
+            <tr>
+                <td>{{ deelname.expert_naam }}</td>
+                <td>{{ deelname.onderzoek_titel }}</td>
+                <td>{{ deelname.datum }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+    <tr>
+        <td colspan="3" class="text-center">Geen afgekeurde deelnamen</td>
+    </tr>
+    {% endif %}
+{% else %}
+<tr>
+    <td colspan="6" class="text-center">
+        Invalide status opgegeven
+    </td>
+</tr>
+{% endif %}

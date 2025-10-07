@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundigen.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundige_square.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            {% if not user %}
+                window.location.href = "{{ url_for('users_blueprint.login') }}";
+            {% endif %}
+        });
+    </script>
+    <title>Mijn Profiel</title>
+</head>
+
+<body class="body"
+      style="background-image: url('{{ url_for('static', filename='images/achtergrond_accessibility3.0.png') }}');
+              background-size: 100% 100%;
+              background-repeat: no-repeat;">
+
+{% if user %}
+    <!--Header + navigatie -->
+    <header>
+        <nav>
+            <ul class="header">
+                <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Lopende
+                    onderzoeken</a></li>
+                <li><a href="{{ url_for('ervaringsdeskundige_blueprint.profiel_ervaringsdeskundigen') }}"
+                       class="active">Mijn gegevens</a></li>
+                <li><a href="https://www.accessibility.nl/contact">Contact</a></li>
+                <li>
+                    <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Accessibility">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="info-container">
+        <h2 class="page-title">Mijn Profiel</h2>
+
+        <div class="profile-content">
+            <!--linker kant -->
+            <div class="info-links">
+                <h3>Persoonlijke informatie</h3>
+                <h2>{{ user.voornaam }} {{ user.achternaam }}</h2>
+
+                <div class="profile-section">
+                    <h4>Kort voorstellen</h4>
+                    <p>{{ user.kort_voorstellen if user.kort_voorstellen else "Geen informatie beschikbaar" }}</p>
+                </div>
+            </div>
+
+            <!--Rechter kant -->
+            <div class="info-rechts">
+                <h3>Uw gegevens</h3>
+                <table class="profile-table">
+                    <tr>
+                        <th>E-mail</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telefoonnummer</th>
+                        <td>{{ user.telefoonnr if user.telefoonnr else "Niet opgegeven" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Geslacht</th>
+                        <td>{{ user.geslacht if user.geslacht else "Niet opgegeven" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Geboortedatum</th>
+                        <td>{{ user.geboorte_datum if user.geboorte_datum else "Niet opgegeven" }}</td>
+                    </tr>
+                    {#                TODO refer to disability table#}
+                    <tr>
+                        <th>Type beperking</th>
+                        <td>{{ user[7] if user[7] else "Niet opgegeven" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Bijzonderheden</th>
+                        <td>{{ user.bijzonderheden if user.bijzonderheden else "Niet opgegeven" }}</td>
+                    </tr>
+                    {#                TODO refer to toezichthouder table#}
+                    <tr>
+                        <th>Toezichthouder</th>
+                        <td>{{ user[9] if user[9] else "Niet opgegeven" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Bijzonderheden beschikbaarheid</th>
+                        <td>{{ user.bijzonderheden_beschikbaarheid if user.bijzonderheden_beschikbaarheid else "Niet opgegeven" }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!--Buttons onderaan -->
+        <div class="action-buttons">
+            <a href="" class="button">Gegevens wijzigen</a>
+            <a href="{{  url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen')  }}" class="button">Terug naar onderzoeken</a>
+        </div>
+    </div>
+{% else %}
+    <div class="redirect-message">
+        <p>Redirecting to login page...</p>
+    </div>
+{% endif %}
+
+</body>
+</html>

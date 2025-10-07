@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundigen.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ervaringsdeskundige_square.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{#    <script src="{{ url_for('static', filename='scripts/nieuwe_gebruiker_ervaringsdeskundigen.js') }}"></script>#}
+    <title>Informatie onderzoek</title>
+</head>
+
+<body class="body"
+      style="background-image: url('{{ url_for('static', filename='images/achtergrond_accessibility3.0.png') }}');
+             background-size: 100% 100% ;
+             background-repeat: no-repeat;">
+
+
+<!--Header + navigatie -->
+<header>
+    <nav>
+        <ul class="header">
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">Lopende onderzoeken</a></li>
+          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.profiel_ervaringsdeskundigen') }}">Mijn gegevens</a></li>
+{#          <li><a href="{{ url_for('ervaringsdeskundige_blueprint.mailbox_ervaringsdeskundigen') }}">Notificaties/mailbox</a></li>#}
+          <li><a href="https://www.accessibility.nl/contact">Contact</a></li>
+          <li>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Accessibility">
+            </a>
+          </li>
+          <li>
+              <p> Welkom {{ user[1] }}</p>
+          </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="info-container" role="region" aria-labelledby="onderzoek-info">
+        {% for profiel in profiel_gebruiker %}
+
+        <!--linker kant -->
+        <div class="info-links">
+            <h3>Profiel</h3>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Lege profielfoto">
+            <button class="button">Profielfoto wijzigen</button>
+            <h2>{{ profiel[1] }} {{ profiel[2] }}</h2>
+            <h4>Kort voorstellen</h4>
+            <p>{{ profiel[11] }}</p>
+        </div>
+
+        <!--Rechter kant -->
+        <div class="info-rechts" role="region" aria-labelledby="tabel-gegevens">
+            <table>
+                <tr>
+                    <th>E-mail</th>
+                    <th>Telefoonnummer</th>
+                    <th>Geslacht</th>
+                    <th>Geboorte datum</th>
+                    <th>Type beperking</th>
+                    <th>Bijzonderheden</th>
+                    <th>toezichthouder</th>
+                    <th>Bijzonderheden beschikbaarheid</th>
+                </tr>
+
+                <tr>
+                    <td>{{ profiel[3] }}</td>
+                    <td>{{ profiel[4] }}</td>
+                    <td>{{ profiel[5] }}</td>
+                    <td>{{ profiel[6] }}</td>
+                    <td>{{ profiel[7] }}</td>
+                    <td>{{ profiel[8] }}</td>
+                    <td>{{ profiel[9] }}</td>
+                    <td>{{ profiel[10] }}</td>
+                </tr>
+        {% else %}
+        <tr>
+            <td colspan="14">Geen onderzoeken beschikbaar.</td>
+        </tr>
+        {% endfor %}
+            </table>
+        </div>
+
+        <!--Buttons onderaan -->
+        <div role="region" aria-labelledby="profiel-buttons">
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.wijzigen_gebruiker_ervaringsdeskundigen') }}" class="button" >Wijzigen</a>
+            <a href="{{ url_for('ervaringsdeskundige_blueprint.lopende_onderzoeken_ervaringsdeskundigen') }}" class="button" >Terug</a>
+        </div>
+
+</div>
+
+</body>
+</html>

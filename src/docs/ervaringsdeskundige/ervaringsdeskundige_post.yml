@@ -1,0 +1,27 @@
+Maak een nieuwe ervaringsdeskundige aan
+---
+tags: 
+- Ervaringsdeskundigen
+consumes:
+  application/json
+produces:
+  application/json
+parameters:
+- in: body
+  required: true
+  schema:
+    $ref: './apidefinitions/#/Ervaringsdeskundige'
+responses:
+  200:
+    description: Een ervaringsdeskundige is succesvol aangemaakt
+    schema:
+      type: int
+      description: 'Het id van de aangemaakte ervaringsdeskundige'
+  403:
+    description: De API sleutel ontbrak uit het verzoek of had niet voldoende rechten om deze actie uit te voeren
+    schema:
+      $ref: './apidefinitions/#/Error'
+  415:
+    description: Het verzoek had missende of invalide data
+    schema:
+      $ref: './apidefinitions/#/Error'

@@ -1,0 +1,24 @@
+Zoek een ervaringsdeskundige gebaseerd op zijn/haar Id
+---
+tags: 
+- Ervaringsdeskundigen
+produces:
+  application/json
+parameters:
+- name: id
+  in: path
+  type: integer
+  required: true
+responses:
+  200:
+    description: Een ervaringsdeskundige verbonden aan het verzochte id
+    schema:
+      $ref: './apidefinitions/#/Ervaringsdeskundige'
+  403:
+    description: De API sleutel ontbrak uit het verzoek of had niet voldoende rechten om deze actie uit te voeren
+    schema:
+      $ref: './apidefinitions/#/Error'
+  404:
+    description: Er was geen ervaringsdeskundige gevonden met het verzochte id
+    schema:
+      $ref: './apidefinitions/#/Error'
