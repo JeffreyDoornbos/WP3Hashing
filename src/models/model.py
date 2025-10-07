@@ -4,10 +4,11 @@ from pathlib import Path
 class Model:
     @property
     def path_to_database(self):
-        path_to_file = Path(__file__)
-        parent_folder = path_to_file.parent.resolve()
-        project_root = parent_folder.parent.parent
-        return project_root / "database" / "database.db"
+        path_to_file = Path(__file__).resolve()
+        project_root = path_to_file.parent.parent.parent
+        db_path = project_root / "database" / "database.db"
+        print(f"[DEBUG] Database gebruikt door Model: {db_path}")
+        return db_path
     
     def query(self, query: str, *args, many=False, first=False, id=False):
         conn = self.__open_connection()

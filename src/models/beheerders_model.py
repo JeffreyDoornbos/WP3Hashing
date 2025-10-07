@@ -87,20 +87,31 @@ class BeheerdersModel(Model): #Model class regelt meeste database spul, enige wa
         """
         results = self.query(query_str)
         return [dict(row) for row in results]
-
+    
     def create_beheerder(self, data):
-        query_str = """
-            INSERT INTO beheerders(voornaam, achternaam, postcode, geslacht, telefoonnr, email, wachtwoord, salt) VALUES
-            (?, ?, ?, ?, ?, ?, ?, ?)
         """
-        return self.query(query_str, *data, id=True)
+        Maak een nieuwe beheerder aan en retourneer het ID.
+        """
+        query_str = """
+            INSERT INTO beheerders
+            (voornaam, achternaam, postcode, geslacht, telefoonnr, email, wachtwoord, salt)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """
+        try:
+            # Gebruik de ingebouwde query-methode van Model (die het juiste pad al kent)
+            beheerder_id = self.query(query_str, *data, id=True)
+            print(f"✅ Beheerder aangemaakt met ID {beheerder_id}")
+            return beheerder_id
+        except Exception as e:
+            print("❌ FOUT bij aanmaken beheerder:", e)
+            return None
     
     def get_beheerder_password(self, email):
         query_str = """
-            SELECT id, wachtwoord FROM beheerders WHERE email = ?
+            SELECT id, wachtwoord, salt FROM beheerders WHERE email = ?
         """
         return self.query(query_str, email, first=True)
-    
+        
     def get_row_count_for(self, table:str, status:int)->int:
         query_str = f"""
             SELECT id FROM {table} WHERE status_id=?

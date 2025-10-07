@@ -1,6 +1,8 @@
+from os import urandom
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from models.beheerders_model import BeheerdersModel
 import bleach
+import base64
 from argon2 import PasswordHasher
 from threading import Timer
 from .controller import Controller
@@ -70,44 +72,61 @@ class BeheerdersController(Controller):
             self.model.update_deelnamen_status(deelname_id, status_id)
             flash("Status van deelname bijgewerkt", "success")
             return redirect(url_for("beheerders_blueprint.deelname"))
-
+        
         @self.blueprint.route("/beheerder_registratie/", methods=["GET", "POST"])
         def register_beheerder():
             if session.get('beheerder_id'):
                 return redirect(url_for('beheerders_blueprint.dashboard'))
             if request.method == "POST":
-                data = (
-                    bleach.clean(request.form.get('voornaam'), ['b', 'i', 'u', 'a'], strip=True),
-                    bleach.clean(request.form.get('achternaam'), ['b', 'i', 'u', 'a'], strip=True),
-                    bleach.clean(request.form.get('postcode'), ['b', 'i', 'u', 'a'], strip=True),
-                    bleach.clean(request.form.get('geslacht'), ['b', 'i', 'u', 'a'], strip=True),
-                    bleach.clean(request.form.get('telefoonnr'), ['b', 'i', 'u', 'a'], strip=True),
-                    bleach.clean(request.form.get('email'), ['b', 'i', 'u', 'a'], strip=True),
-                    PasswordHasher().hash(bleach.clean(request.form.get('wachtwoord'), ['b', 'i', 'u', 'a'], strip=True)),
-                    ''
-                )
+                salt = base64.b64encode(urandom(16)).decode('utf-8')
+
+                voornaam = bleach.clean(request.form.get('voornaam'), ['b', 'i', 'u', 'a'], strip=True)
+                achternaam = bleach.clean(request.form.get('achternaam'), ['b', 'i', 'u', 'a'], strip=True)
+                postcode = bleach.clean(request.form.get('postcode'), ['b', 'i', 'u', 'a'], strip=True)
+                geslacht = bleach.clean(request.form.get('geslacht'), ['b', 'i', 'u', 'a'], strip=True)
+                telefoonnr = bleach.clean(request.form.get('telefoonnr'), ['b', 'i', 'u', 'a'], strip=True)
+                email = bleach.clean(request.form.get('email'), ['b', 'i', 'u', 'a'], strip=True)
+                wachtwoord = bleach.clean(request.form.get('wachtwoord'), ['b', 'i', 'u', 'a'], strip=True)
+
+                ph = PasswordHasher()
+                hashed_password = ph.hash(wachtwoord + salt)
+
+                data = (voornaam, achternaam, postcode, geslacht, telefoonnr, email, hashed_password, salt)
                 id = self.model.create_beheerder(data)
+
                 if not id:
                     flash("Failed to create beheerder", "error")
                     return {"error": "Failed to create beheerder"}, 500
+
                 session['beheerder_id'] = id
                 return redirect(url_for('beheerders_blueprint.login_beheerder'))
+
             return render_template("register.html")
-        
+
         @self.blueprint.route("/beheerder_login/", methods=["GET", "POST"])
         def login_beheerder():
             if session.get('beheerder_id'):
                 return redirect(url_for('beheerders_blueprint.dashboard'))
+
             if request.method == "POST":
                 email = bleach.clean(request.form.get('email'), ['b', 'i', 'u', 'a'], strip=True)
                 password = bleach.clean(request.form.get('wachtwoord'), ['b', 'i', 'u', 'a'], strip=True)
+
                 ww = self.model.get_beheerder_password(email)
-                print(ww.keys())
-                if ww and 'wachtwoord' in ww.keys() and PasswordHasher().verify(ww['wachtwoord'], password):
-                    session['beheerder_id'] = ww['id']
-                    return redirect(url_for('beheerders_blueprint.dashboard'))
-                flash("Failed to login beheerder", "error")
-                return {"error": "Incorrect password"}, 500
+                if ww and 'wachtwoord' in ww and 'salt' in ww:
+                    ph = PasswordHasher()
+                    try:
+
+                        ph.verify(ww['wachtwoord'], password + ww['salt'])
+                        session['beheerder_id'] = ww['id']
+                        return redirect(url_for('beheerders_blueprint.dashboard'))
+                    except Exception:
+                        flash("Incorrect wachtwoord", "error")
+                        return {"error": "Incorrect password"}, 500
+
+                flash("Beheerder niet gevonden", "error")
+                return {"error": "Beheerder niet gevonden"}, 404
+
             return render_template("login.html")
 
         @self.blueprint.route("/beheerder_logout/", methods=["GET"])
